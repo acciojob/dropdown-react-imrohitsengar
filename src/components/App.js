@@ -140,10 +140,68 @@ const states = [{
 
 function App() 
 {
+	const [stateIndex, setStateIndex] = useState(0);
+	const [cityIndex, setCityIndex] = useState(0);
+	const [landmarkIndex, setLandmarkIndex] = useState(0);
+
+	const selectedState = states[stateIndex];
+	const cities = selectedState.city;
+	const selectedCity = cities[cityIndex];
+	const landmarks = selectedCity.landmarks;
+	const selectedLandmark = landmarks[landmarkIndex];
+
+	const handleStateChange = (e) => {
+		setStateIndex(Number(e.target.value));
+		setCityIndex(0);
+		setLandmarkIndex(0);
+	};
+
+	const handleCityChange = (e) => {
+		setCityIndex(Number(e.target.value));
+		setLandmarkIndex(0);
+	};
+
+	const handleLandmarkChange = (e) => {
+		setLandmarkIndex(Number(e.target.value));
+	};
+
 	// Do not alter/remove main div
 	return (
 	<div id="main">
-		
+		<h1>Cascading Dropdowns</h1>
+
+		<div>
+			<label>State: </label>
+			<select id="state" value={stateIndex} onChange={handleStateChange}>
+				{states.map((s, i) => (
+					<option key={i} value={i}>{s.name}</option>
+				))}
+			</select>
+			<div id="state-name">{selectedState.name}</div>
+			<div id="state-description">{selectedState.description}</div>
+		</div>
+
+		<div>
+			<label>City: </label>
+			<select id="city" value={cityIndex} onChange={handleCityChange}>
+				{cities.map((c, i) => (
+					<option key={i} value={i}>{c.name}</option>
+				))}
+			</select>
+			<div id="city-name">{selectedCity.name}</div>
+			<div id="city-description">{selectedCity.description}</div>
+		</div>
+
+		<div>
+			<label>Landmark: </label>
+			<select id="landmark" value={landmarkIndex} onChange={handleLandmarkChange}>
+				{landmarks.map((l, i) => (
+					<option key={i} value={i}>{l.name}</option>
+				))}
+			</select>
+			<div id="landmark-name">{selectedLandmark.name}</div>
+			<div id="landmark-description">{selectedLandmark.description}</div>
+		</div>
 	</div>
 	);
 }
